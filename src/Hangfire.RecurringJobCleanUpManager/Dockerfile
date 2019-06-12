@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/runtime:2.2 AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2 AS build
 ARG Version  
 WORKDIR /src
 COPY . .
