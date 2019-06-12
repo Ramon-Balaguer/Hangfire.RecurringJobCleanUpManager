@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.271
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hangfire.RecurringJobCleanUpManager", "src\Hangfire.RecurringJobCleanUpManager\Hangfire.RecurringJobCleanUpManager.csproj", "{9024B4D6-5FCB-47DE-A3D1-DD2992AE4C53}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hangfire.RecurringJobCleanUpManager.Tests", "src\Hangfire.RecurringJobCleanUpManager.Tests\Hangfire.RecurringJobCleanUpManager.Tests.csproj", "{97DD7CB8-AA6D-47C2-8F89-04989D29A2CA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9024B4D6-5FCB-47DE-A3D1-DD2992AE4C53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9024B4D6-5FCB-47DE-A3D1-DD2992AE4C53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9024B4D6-5FCB-47DE-A3D1-DD2992AE4C53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9024B4D6-5FCB-47DE-A3D1-DD2992AE4C53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97DD7CB8-AA6D-47C2-8F89-04989D29A2CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97DD7CB8-AA6D-47C2-8F89-04989D29A2CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97DD7CB8-AA6D-47C2-8F89-04989D29A2CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97DD7CB8-AA6D-47C2-8F89-04989D29A2CA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4D60B1A9-6B1F-4513-8787-E52875FA005D}
+	EndGlobalSection
+EndGlobal
