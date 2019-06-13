@@ -23,4 +23,4 @@ ARG Version
 ARG NUGET_KEY
 ARG NUGET_URL=https://api.nuget.org/v3/index.json
 WORKDIR /src
-RUN dotnet nuget push /src/artifacts/*.nupkg --source NUGET_URL --api-key $NUGET_KEY
+RUN dotnet nuget push /src/artifacts/*.nupkg --source $NUGET_URL --api-key $NUGET_KEY

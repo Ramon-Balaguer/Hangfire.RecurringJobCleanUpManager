@@ -7,6 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hangfire.RecurringJobCleanU
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hangfire.RecurringJobCleanUpManager.Tests", "src\Hangfire.RecurringJobCleanUpManager.Tests\Hangfire.RecurringJobCleanUpManager.Tests.csproj", "{97DD7CB8-AA6D-47C2-8F89-04989D29A2CA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHubFlow", "GitHubFlow", "{8D3A5CFE-2517-480C-9A05-9810C9A142B6}"
+	ProjectSection(SolutionItems) = preProject
+		.github\main.workflow = .github\main.workflow
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
