@@ -5,6 +5,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Company />
     <PackageProjectUrl>https://github.com/Ramon-Balaguer/Hangfire.RecurringJobCleanUpManager</PackageProjectUrl>
+    <Authors>Ramon-Balaguer</Authors>
   </PropertyGroup>
 
   <ItemGroup>
