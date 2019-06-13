@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Linq;
 using System.Linq.Expressions;
 using Hangfire.Common;
 
@@ -15,6 +13,7 @@ namespace Hangfire.RecurringJobCleanUpManager
             RecurringJobOptions = recurringJobOptions ?? throw new ArgumentNullException(nameof(recurringJobOptions));
             Id = id ?? throw new ArgumentNullException(nameof(id));
         }
+
         public string Id { get; }
 
         public Job Job { get; }
@@ -23,56 +22,58 @@ namespace Hangfire.RecurringJobCleanUpManager
 
         public string CronExpression { get; }
 
-        public static EnforceRecurringJob Create<T>(string id, Expression<Action<T>> methodCall, string cronExpression, string queue, TimeZoneInfo timeZone)
-        {
-            var options = new RecurringJobOptions()
-            {
-                QueueName = queue,
-                TimeZone = timeZone
-            };
-            return Create<T>(id, methodCall, cronExpression, options);
-        }
-
-        public static EnforceRecurringJob Create<T>(string id, Expression<Action<T>> methodCall, string cronExpression, string queue)
-        {
-            var options = new RecurringJobOptions()
-            {
-                QueueName = queue
-            };
-            return Create<T>(id, methodCall, cronExpression, options);
-        }
-
-        public static EnforceRecurringJob Create<T>(string id, Expression<Action<T>> methodCall, string cronExpression)
-        {
-            var options = new RecurringJobOptions();
-            return Create<T>(id, methodCall, cronExpression, options);
-        }
-
-        private static EnforceRecurringJob Create<T>(string id, Expression<Action<T>> methodCall, string cronExpression,
-            RecurringJobOptions options)
-        {
-            Job job = Job.FromExpression<T>(methodCall);
-            return new EnforceRecurringJob(id, job, cronExpression, options);
-        }
-
 
         public bool Equals(EnforceRecurringJob other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return string.Equals(Id, other.Id) && 
-                   Job.Type == other.Job.Type && 
+            return string.Equals(Id, other.Id) &&
+                   Job.Type == other.Job.Type &&
                    Equals(Job.Method, other.Job.Method) &&
                    Equals(RecurringJobOptions.QueueName, other.RecurringJobOptions.QueueName) &&
                    Equals(RecurringJobOptions.TimeZone, other.RecurringJobOptions.TimeZone) &&
                    string.Equals(CronExpression, other.CronExpression);
         }
 
+        public static EnforceRecurringJob Create<T>(string id, Expression<Action<T>> methodCall, string cronExpression,
+            string queue, TimeZoneInfo timeZone)
+        {
+            var options = new RecurringJobOptions
+            {
+                QueueName = queue,
+                TimeZone = timeZone
+            };
+            return Create(id, methodCall, cronExpression, options);
+        }
+
+        public static EnforceRecurringJob Create<T>(string id, Expression<Action<T>> methodCall, string cronExpression,
+            string queue)
+        {
+            var options = new RecurringJobOptions
+            {
+                QueueName = queue
+            };
+            return Create(id, methodCall, cronExpression, options);
+        }
+
+        public static EnforceRecurringJob Create<T>(string id, Expression<Action<T>> methodCall, string cronExpression)
+        {
+            var options = new RecurringJobOptions();
+            return Create(id, methodCall, cronExpression, options);
+        }
+
+        private static EnforceRecurringJob Create<T>(string id, Expression<Action<T>> methodCall, string cronExpression,
+            RecurringJobOptions options)
+        {
+            var job = Job.FromExpression(methodCall);
+            return new EnforceRecurringJob(id, job, cronExpression, options);
+        }
+
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((EnforceRecurringJob) obj);
         }
 
@@ -80,7 +81,7 @@ namespace Hangfire.RecurringJobCleanUpManager
         {
             unchecked
             {
-                var hashCode = (Id != null ? Id.GetHashCode() : 0);
+                var hashCode = Id != null ? Id.GetHashCode() : 0;
                 hashCode = (hashCode * 397) ^ (Job != null ? Job.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (RecurringJobOptions != null ? RecurringJobOptions.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (CronExpression != null ? CronExpression.GetHashCode() : 0);

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Hangfire.Storage;
 
 namespace Hangfire.RecurringJobCleanUpManager
@@ -11,7 +9,7 @@ namespace Hangfire.RecurringJobCleanUpManager
 
         public RecurringJobRepository()
         {
-            this.jobStorage = JobStorage.Current;
+            jobStorage = JobStorage.Current;
         }
 
         public RecurringJobRepository(JobStorage jobStorage)
@@ -19,11 +17,10 @@ namespace Hangfire.RecurringJobCleanUpManager
             this.jobStorage = jobStorage;
         }
 
-        virtual public List<RecurringJobDto> GetRecurringJobs()
+        public virtual List<RecurringJobDto> GetRecurringJobs()
         {
             using (var connection = jobStorage.GetConnection())
             {
-
                 return connection.GetRecurringJobs();
             }
         }

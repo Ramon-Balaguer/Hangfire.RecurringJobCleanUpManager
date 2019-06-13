@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Company />
+    <PackageProjectUrl>https://github.com/Ramon-Balaguer/Hangfire.RecurringJobCleanUpManager</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>

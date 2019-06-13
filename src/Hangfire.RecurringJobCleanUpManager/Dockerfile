@@ -17,7 +17,7 @@ ARG Version
 WORKDIR /src
 RUN dotnet pack /p:Version=$Version -c Release --no-restore --no-build -o /src/artifacts 
 
-# publish
+# Publish
 FROM pack AS publish
 ARG Version  
 ARG NUGET_KEY

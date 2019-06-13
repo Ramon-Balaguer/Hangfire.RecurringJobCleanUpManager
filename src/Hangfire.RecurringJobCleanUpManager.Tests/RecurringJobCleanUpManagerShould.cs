@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
-using Castle.Components.DictionaryAdapter;
 using Hangfire.Common;
-using Hangfire.RecurringJobCleanUpManager;
 using Hangfire.Storage;
 using NSubstitute;
 using Xunit;
@@ -26,18 +23,21 @@ namespace Hangfire.RecurringJobCleanUpManager.Tests
             // Arrange
             var hourly = Cron.Hourly();
             Expression<Action<string>> methodCall = text => text.ToString();
-            var recurringJobCleanUpManager = new RecurringJobCleanUpManager(recurringJobManager, recurringJobRepositoryMock)
-            {
-                EnforceRecurringJob.Create<string>("jobrecurrent", methodCall, hourly),
-                EnforceRecurringJob.Create<string>("jobrecurrent2", methodCall, hourly)
-            };
+            var recurringJobCleanUpManager =
+                new RecurringJobCleanUpManager(recurringJobManager, recurringJobRepositoryMock)
+                {
+                    EnforceRecurringJob.Create("jobrecurrent", methodCall, hourly),
+                    EnforceRecurringJob.Create("jobrecurrent2", methodCall, hourly)
+                };
 
             // Act
             recurringJobCleanUpManager.AddUpdateDeleteJobs();
 
             // Assert
-            recurringJobManager.Received().AddOrUpdate("jobrecurrent", Arg.Any<Job>(), hourly, Arg.Any<RecurringJobOptions>());
-            recurringJobManager.Received().AddOrUpdate("jobrecurrent2", Arg.Any<Job>(), hourly, Arg.Any<RecurringJobOptions>());
+            recurringJobManager.Received()
+                .AddOrUpdate("jobrecurrent", Arg.Any<Job>(), hourly, Arg.Any<RecurringJobOptions>());
+            recurringJobManager.Received()
+                .AddOrUpdate("jobrecurrent2", Arg.Any<Job>(), hourly, Arg.Any<RecurringJobOptions>());
         }
 
         [Fact]
@@ -48,7 +48,7 @@ namespace Hangfire.RecurringJobCleanUpManager.Tests
             var jobStorage = Substitute.For<JobStorage>();
             var recurringJobRepositoryMock = Substitute.For<RecurringJobRepository>(jobStorage);
             var recurringJobs = new List<RecurringJobDto>();
-            var recurringJobDto = new RecurringJobDto()
+            var recurringJobDto = new RecurringJobDto
             {
                 Id = "jobToRemove"
             };
@@ -59,21 +59,22 @@ namespace Hangfire.RecurringJobCleanUpManager.Tests
             // Arrange
             var hourly = Cron.Hourly();
             Expression<Action<string>> methodCall = text => text.ToString();
-            var recurringJobCleanUpManager = new RecurringJobCleanUpManager(recurringJobManager, recurringJobRepositoryMock)
-            {
-                EnforceRecurringJob.Create<string>("jobrecurrent", methodCall, hourly),
-                EnforceRecurringJob.Create<string>("jobrecurrent2", methodCall, hourly)
-            };
+            var recurringJobCleanUpManager =
+                new RecurringJobCleanUpManager(recurringJobManager, recurringJobRepositoryMock)
+                {
+                    EnforceRecurringJob.Create("jobrecurrent", methodCall, hourly),
+                    EnforceRecurringJob.Create("jobrecurrent2", methodCall, hourly)
+                };
 
             // Act
             recurringJobCleanUpManager.AddUpdateDeleteJobs();
 
             // Assert
-            recurringJobManager.Received().AddOrUpdate("jobrecurrent", Arg.Any<Job>(), hourly, Arg.Any<RecurringJobOptions>());
-            recurringJobManager.Received().AddOrUpdate("jobrecurrent2", Arg.Any<Job>(), hourly, Arg.Any<RecurringJobOptions>());
+            recurringJobManager.Received()
+                .AddOrUpdate("jobrecurrent", Arg.Any<Job>(), hourly, Arg.Any<RecurringJobOptions>());
+            recurringJobManager.Received()
+                .AddOrUpdate("jobrecurrent2", Arg.Any<Job>(), hourly, Arg.Any<RecurringJobOptions>());
             recurringJobManager.Received().RemoveIfExists("jobToRemove");
         }
-
-
     }
 }

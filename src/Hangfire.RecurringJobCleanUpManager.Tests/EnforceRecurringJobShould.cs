@@ -1,6 +1,5 @@
 using System;
 using Hangfire.Common;
-using Hangfire.RecurringJobCleanUpManager;
 using Xunit;
 
 namespace Hangfire.RecurringJobCleanUpManager.Tests
@@ -13,7 +12,7 @@ namespace Hangfire.RecurringJobCleanUpManager.Tests
             var jobExpected = Job.FromExpression<string>(text => text.ToString());
             var id = "jobrecurrent";
             var hourly = Cron.Hourly();
-            EnforceRecurringJob expected = new EnforceRecurringJob(id, jobExpected, hourly, new RecurringJobOptions());
+            var expected = new EnforceRecurringJob(id, jobExpected, hourly, new RecurringJobOptions());
 
             var actual = EnforceRecurringJob.Create<string>(id, text => text.ToString(), hourly);
 
