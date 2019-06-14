@@ -1,22 +1,22 @@
 # Hangfire.RecurringJobCleanUpManager
-Hangfire extension to delete jobs that have been removed on code.
+Hangfire extension to delete jobs that have been removed from configuration code.
 
 # Objectives
-- Delete jobs that have been removed on code.
-- Simplicity.
+- Delete jobs that have been removed from configuration code.
+- Achieve the former objective in a simple/streamlined implementation.
 
 # Current situation
-At the beginning there is a coordination between your code and the definition of persistent jobs in the database.
+When first configuring a new job on Hangfire, there is a synchronization between the job configuration on code and the job definitions persisted on database.
 ![scenario](https://raw.githubusercontent.com/Ramon-Balaguer/Hangfire.RecurringJobCleanUpManager/master/docs/images/readme/actual.png)
 
-When removing a job from your code.
+Then, when removing a job from your code ...
 ![Code remove](https://raw.githubusercontent.com/Ramon-Balaguer/Hangfire.RecurringJobCleanUpManager/master/docs/images/readme/actual_remove.png)
 
-The definition of the job is not removed from the database.
+... the corresponding job definition is not removed from the database.
 ![No definition remove](https://raw.githubusercontent.com/Ramon-Balaguer/Hangfire.RecurringJobCleanUpManager/master/docs/images/readme/actual_jobnotremove.png)
 
 # Solution
-Add a manager that removes jobs that are not in the code but persisted in the database.
+Add a manager that removes jobs no longer defined in code but still persisted in the database, restoring synchronization.
 ![New manager](https://raw.githubusercontent.com/Ramon-Balaguer/Hangfire.RecurringJobCleanUpManager/master/docs/images/readme/new_manager.png)
 
 # Example of use
@@ -29,5 +29,3 @@ var recurringJobCleanUp = new RecurringJobCleanUpManager(recurringJobManager)
 
 recurringJobCleanUp.AddUpdateDeleteJobs();
 ```
-
-
