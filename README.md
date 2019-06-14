@@ -1,9 +1,9 @@
 # Hangfire.RecurringJobCleanUpManager
-Extension of the Hangfire to delete jobs that are not in the code.
+Hangfire extension to delete jobs that have been removed on code.
 
 # Objectives
-- Delete jobs that are not in the code
-- Simplicity
+- Delete jobs that have been removed on code.
+- Simplicity.
 
 # Current situation
 At the beginning there is a coordination between your code and the definition of persistent jobs in the database.
@@ -20,7 +20,7 @@ Add a manager that removes jobs that are not in the code but persisted in the da
 ![New manager](https://raw.githubusercontent.com/Ramon-Balaguer/Hangfire.RecurringJobCleanUpManager/master/docs/images/readme/new_manager.png)
 
 # Example of use
-```C#
+```csharp
 var recurringJobCleanUp = new RecurringJobCleanUpManager(recurringJobManager)
 {
     EnforceRecurringJob.Create<StoreBookings>("StoreBookings1", bookings => bookings.Execute(),Hangfire.Cron.Minutely()),
