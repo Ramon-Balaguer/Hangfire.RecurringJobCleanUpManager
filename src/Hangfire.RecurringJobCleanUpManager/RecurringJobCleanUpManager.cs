@@ -46,11 +46,16 @@ namespace Hangfire.RecurringJobCleanUpManager
             var jobsExecution = recurringJobRepository.GetRecurringJobs();
 
             foreach (var job in jobsExecution)
-                if (!enforceRecurringJobs.ContainsId(job.Id))
-                    recurringJobManager.RemoveIfExists(job.Id);
+                RemoveJobIfItIsRemovedFromTheCode(job);
 
             foreach (var job in enforceRecurringJobs.RecurringJobs)
                 recurringJobManager.AddOrUpdate(job.Id, job.Job, job.CronExpression, job.RecurringJobOptions);
+        }
+
+        private void RemoveJobIfItIsRemovedFromTheCode(Storage.RecurringJobDto job)
+        {
+            if (!enforceRecurringJobs.ContainsId(job.Id))
+                recurringJobManager.RemoveIfExists(job.Id);
         }
     }
 }

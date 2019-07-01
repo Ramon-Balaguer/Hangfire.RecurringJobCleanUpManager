@@ -7,13 +7,24 @@ namespace Hangfire.RecurringJobCleanUpManager.Tests
 {
     public class EnforceRecurringJobsShould
     {
-        [Fact]
-        public void AddAJobs()
+        private EnforceRecurringJobs safeManager;
+        private string hourly;
+        private string idJob;
+        private Expression<Action<string>> methodCall;
+
+        public EnforceRecurringJobsShould()
         {
-            var safeManager = new EnforceRecurringJobs();
-            var hourly = Cron.Hourly();
-            Expression<Action<string>> methodCall = text => text.ToString();
-            var job = EnforceRecurringJob.Create("jobrecurrent", methodCall, hourly);
+            methodCall = text => text.ToString();
+            safeManager = new EnforceRecurringJobs();
+            hourly = Cron.Hourly();
+            idJob = "jobrecurrent";
+
+        }
+
+        [Fact]
+        public void AddJob()
+        {
+            var job = EnforceRecurringJob.Create(idJob, methodCall, hourly);
             var expectedList = new List<EnforceRecurringJob> {job};
 
             safeManager.Add(job);
@@ -22,37 +33,18 @@ namespace Hangfire.RecurringJobCleanUpManager.Tests
         }
 
         [Fact]
-        public void AddTwoJobs()
-        {
-            var safeManager = new EnforceRecurringJobs();
-            var hourly = Cron.Hourly();
-            Expression<Action<string>> methodCall = text => text.ToString();
-            safeManager.Add(EnforceRecurringJob.Create("jobrecurrent", methodCall, hourly));
-            safeManager.Add(EnforceRecurringJob.Create("jobrecurrent2", methodCall, hourly));
-
-            Assert.Equal(2, safeManager.Count);
-        }
-
-        [Fact]
         public void RiseExcetionWhenInsertTwoJobsWithSameID()
         {
-            var safeManager = new EnforceRecurringJobs();
-            var id = "jobrecurrent";
-            var hourly = Cron.Hourly();
-            Expression<Action<string>> methodCall = text => text.ToString();
-            safeManager.Add(EnforceRecurringJob.Create(id, methodCall, hourly));
+            safeManager.Add(EnforceRecurringJob.Create(idJob, methodCall, hourly));
 
             Assert.Throws<Exception>(() =>
-                safeManager.Add(EnforceRecurringJob.Create(id, methodCall, hourly)));
+                safeManager.Add(EnforceRecurringJob.Create(idJob, methodCall, hourly)));
         }
 
         [Fact]
-        public void TreeTwoJobs()
+        public void AddMultipleJobs()
         {
-            var safeManager = new EnforceRecurringJobs();
-            var hourly = Cron.Hourly();
-            Expression<Action<string>> methodCall = text => text.ToString();
-            safeManager.Add(EnforceRecurringJob.Create("jobrecurrent", methodCall, hourly));
+            safeManager.Add(EnforceRecurringJob.Create(idJob, methodCall, hourly));
             safeManager.Add(EnforceRecurringJob.Create("jobrecurrent2", methodCall, hourly));
             safeManager.Add(EnforceRecurringJob.Create("jobrecurrent3", methodCall, hourly));
 

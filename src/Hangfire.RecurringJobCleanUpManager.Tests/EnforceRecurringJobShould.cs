@@ -6,12 +6,19 @@ namespace Hangfire.RecurringJobCleanUpManager.Tests
 {
     public class EnforceRecurringJobShould
     {
-        [Fact]
-        public void CreateWithFactory()
+        private Job jobExpected;
+        private string id;
+        private string hourly;
+
+        public EnforceRecurringJobShould()
         {
-            var jobExpected = Job.FromExpression<string>(text => text.ToString());
-            var id = "jobrecurrent";
-            var hourly = Cron.Hourly();
+            jobExpected = Job.FromExpression<string>(text => text.ToString());
+            id = "jobrecurrent";
+            hourly = Cron.Hourly();
+        }
+        [Fact]
+        public void BeCreatedWithFactory()
+        {
             var expected = new EnforceRecurringJob(id, jobExpected, hourly, new RecurringJobOptions());
 
             var actual = EnforceRecurringJob.Create<string>(id, text => text.ToString(), hourly);
@@ -20,12 +27,9 @@ namespace Hangfire.RecurringJobCleanUpManager.Tests
         }
 
         [Fact]
-        public void CreateWithFactoryAndQueue()
+        public void BeCreatedWithFactoryAndQueue()
         {
-            var jobExpected = Job.FromExpression<string>(text => text.ToString());
-            var id = "jobrecurrent";
             var queue = "critical";
-            var hourly = Cron.Hourly();
             var timeZoneInfo = TimeZoneInfo.Utc;
             var expected = new EnforceRecurringJob(id, jobExpected, hourly,
                 new RecurringJobOptions {QueueName = queue, TimeZone = timeZoneInfo});
@@ -36,12 +40,9 @@ namespace Hangfire.RecurringJobCleanUpManager.Tests
         }
 
         [Fact]
-        public void CreateWithFactoryAndQueueAndTimeZone()
+        public void BeCreatedWithFactoryAndQueueAndTimeZone()
         {
-            var jobExpected = Job.FromExpression<string>(text => text.ToString());
-            var id = "jobrecurrent";
             var queue = "critical";
-            var hourly = Cron.Hourly();
             var timeZoneInfo = TimeZoneInfo.Utc;
             var expected = new EnforceRecurringJob(id, jobExpected, hourly,
                 new RecurringJobOptions {QueueName = queue, TimeZone = timeZoneInfo});
@@ -52,11 +53,8 @@ namespace Hangfire.RecurringJobCleanUpManager.Tests
         }
 
         [Fact]
-        public void CreateWithFactoryButWhitDiferentMethod()
+        public void BeCreatedWithFactoryWithOtherMethod()
         {
-            var jobExpected = Job.FromExpression<string>(text => text.ToString());
-            var id = "jobrecurrent";
-            var hourly = Cron.Hourly();
             var expected = new EnforceRecurringJob(id, jobExpected, hourly, new RecurringJobOptions());
 
             var actual = EnforceRecurringJob.Create<string>(id, text => text.Insert(0, "test"), hourly);
